@@ -10,6 +10,8 @@ test('creates an employee object', () => {
   expect.stringContaining(employee.email);
 });
 
+test('gets employee name via prompt')
+
 // test getId()
 // test getEmail()
 // test getRole() -- returns 'Employee'
