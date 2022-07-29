@@ -1,6 +1,8 @@
 const Employee = require('./lib/Employee');
 // import other classes
 const inquirer = require('inquirer');
+const templateData = require('./src/template');
+const fs = require('fs');
 
 
 function startQuestions() {
@@ -23,23 +25,12 @@ function startQuestions() {
     }
   ]
   ).then(data => {
-    const newManager = new Manager(data.name, data.id, data.email)
+    const newEmployee = new Employee(data.name, data.id, data.email);
+    console.log('inquierer data: ', data)
+    console.log('newManageer Employee object', newEmployee);
+    templateData(newEmployee);
   })
-
-
-  
-
+  // add fs write file function
 }
 
 startQuestions();
-
-
-   // .then(({ name }) => {
-  //   this.name = new Employee name;
-  //   console.log(this.name);
-  // })
-
-  // inquirer.prompt()
-  // .then(({ id }) => {
-  //   this.id = id;
-  // })
