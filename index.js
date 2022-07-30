@@ -119,11 +119,27 @@ function sharedQuestions(roleAnswer) {
       })
     }
     // IF INTERN IS CHOSEN
-    else if (roleAnswer == 'Intern') {
+    else if (roleAnswer.roleChoice == 'Intern') {
       console.log('Intern was chosen');
-      return;
+      inquirer.prompt([
+        {
+          type: 'input',
+          name: 'school',
+          message: 'What school did they attend?',
+        }
+      ])
+      .then((internSchool) => {
+        const { name, id, email } = newEmployeeData;
+        const newIntern = new Intern(name, id, email, internSchool.school);
+
+        // add new intern to team Array
+        teamArr.push(newIntern);
+        console.log(teamArr);
+
+        // send back to ask if another team member should be added
+        newTeamMember();
+      })
     }
-    
   })
 }
 

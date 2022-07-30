@@ -8,8 +8,8 @@ test('creates an engineer employee object', () => {
 
 // test getGithub method
 test('method returns engineers role', () => {
-  const engineer = new Engineer('Deb', 123, 'email', 'github.com/repo')
-  expect(engineer.getGithub()).toBe('github.com/repo');
+  const engineer = new Engineer('Deb', 123, 'email', 'repoUserName')
+  expect(engineer.getGithub()).toBe('repoUserName');
 });
 
 // test getRole method

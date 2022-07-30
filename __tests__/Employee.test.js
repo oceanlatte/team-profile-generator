@@ -28,4 +28,4 @@ test('returns empolyees email', () => {
 test('returns employee role', () => {
   const employee = new Employee('Bob', 1234, 'email', 'Employee');
   expect(employee.getRole()).toBe('Employee');
-})
+});

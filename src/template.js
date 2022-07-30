@@ -14,9 +14,9 @@ const pageGenerator = templateData => {
     <title>Team Portfolio Generator</title>
   </head>
   <body>
-  <header>
-  <h1>My Team</h1>
-</header>
+    <header>
+    <h1>My Team</h1>
+  </header>
 
 <main class="container">
   <div class="card">
@@ -46,7 +46,7 @@ const pageGenerator = templateData => {
       <li>School:</li>
     </ul>
   </div>
-</main>
+  </main>
     
   </body>
   </html>
