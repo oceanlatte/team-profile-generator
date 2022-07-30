@@ -1,17 +1,20 @@
 const generateEngineeers = templateData => {
-  console.log('generate Engineers temaplate data', templateData);
-  const EngineerArr = templateData.filter(({ role }) => 'Engineer');
-  console.log(EngineerArr);
-  
-  // <div class="card">
-  //   <h2>ENGINEER name</h2>
-  //   <p>Role</p>
-  //   <ul>
-  //     <li>ID:</li>
-  //     <li>Email:</li>
-  //     <li>GitHub:</li>
-  //   </ul>
-  // </div>
+  const engineerArr = templateData.filter(({ role }) => role === 'Engineer'); // filter by role
+
+  const mappedEngineers = engineerArr.map(({ name, id, email, role, github }) => {
+    return ` 
+  <div class="card">
+    <h2>${name}</h2>
+    <p>${role}</p>
+    <ul>
+      <li>ID: ${id}</li>
+      <li>Email: ${email}</li>
+      <li>GitHub: ${github}</li>
+    </ul>
+  </div>
+  `}).join('');
+
+  return mappedEngineers;
 }
 
 const pageGenerator = templateData => {

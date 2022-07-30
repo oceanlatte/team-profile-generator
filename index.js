@@ -72,7 +72,7 @@ function newTeamMember() {
 function sharedQuestions(roleAnswer) {
   console.log(`
   ===================
-  Add a New Employee
+  Add a New ${roleAnswer.roleChoice}
   ===================
   `);
 
@@ -149,6 +149,5 @@ function writeToFile(fileName, data) {
     }
   })
 };
-
 
 startQuestions();
