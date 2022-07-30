@@ -4,30 +4,32 @@ const inquirer = require('inquirer');
 const templateData = require('./src/template');
 const fs = require('fs');
 
-
 function startQuestions() {
+  console.log('Welcome! As the team manager, please enter your information first:')
   // start with questions for Manager
-  inquirer.prompt([
+   return inquirer.prompt([
     {
-    type: 'text',
-    name: 'name',
-    message: "What is the team manager's name?"
+      type: 'text',
+      name: 'name',
+      message: "What is your name?"
     },
     {
       type: 'text',
       name: 'id',
-      message: 'What is their employee ID?'
+      message: 'What is your employee ID?'
     },
     {
       type: 'text',
       name: 'email',
       message: 'What is your email?'
     }
-  ]
-  ).then(data => {
-    const newEmployee = new Employee(data.name, data.id, data.email);
-    console.log('inquierer data: ', data)
-    console.log('newManageer Employee object', newEmployee);
+  ])
+  .then(managerData => {
+    const newEmployee = new Employee(managerData.name, managerData.id, managerData.email);
+    console.log('inquierer manager data: ', managerData);
+    teamArr.push(managerData);
+    let teamArr = [];
+
     templateData(newEmployee);
   })
   // add fs write file function
