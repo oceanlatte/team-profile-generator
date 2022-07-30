@@ -28,13 +28,18 @@ function startQuestions() {
       type: 'text',
       name: 'email',
       message: 'What is your email?'
+    },
+    {
+      type: 'text',
+      name: 'office',
+      message: 'What is your office number?'
     }
   ])
   .then(managerData => {
-    const { name, id, email } = managerData;
-    const newEmployee = new Employee(name, id, email);
-    console.log('inquierer manager data: ', managerData);
-    templateData(newEmployee);
+    const { name, id, email, office } = managerData;
+    const teamManager = new Manager(name, id, email, office);
+
+    teamArr.push(teamManager);
     portfolioQuestions();
   })
 }
@@ -46,8 +51,7 @@ function portfolioQuestions() {
   ==================
   `);
 
-
-  
+  // after confirmation THEN send to templateData(teamArr)
 }
 
 

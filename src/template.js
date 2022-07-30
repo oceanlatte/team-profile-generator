@@ -17,6 +17,7 @@ const pageGenerator = templateData => {
       <li>${templateData.name}</li>
       <li>${templateData.id}</li>
       <li>${templateData.email}</li>
+      <li>${templateData.office}</li>
     </ul>
     
   </body>
