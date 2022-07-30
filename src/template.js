@@ -1,5 +1,6 @@
 const generateEngineeers = templateData => {
-  const engineerArr = templateData.filter(({ role }) => role === 'Engineer'); // filter by role
+  // filter by role: Engineer
+  const engineerArr = templateData.filter(({ role }) => role === 'Engineer'); 
 
   const mappedEngineers = engineerArr.map(({ name, id, email, role, github }) => {
     return ` 
@@ -17,13 +18,29 @@ const generateEngineeers = templateData => {
   return mappedEngineers;
 }
 
+const generateInterns = templateData => {
+  // filter by role: Intern
+  const internArr = templateData.filter(({ role }) => role === 'Intern'); 
+
+  const mappedInterns = internArr.map(({ name, id, email, role, school }) => {
+    return `
+  <div class="card">
+    <h2>${name}</h2>
+    <p>${role}</p>
+    <ul>
+      <li>ID: ${id}</li>
+      <li>Email: ${email}</li>
+      <li>School: ${school}</li>
+    </ul>
+  </div>`
+  }).join('');
+  return mappedInterns;
+}
+
 const pageGenerator = templateData => {
   
   console.log('template data', templateData);
-
-  // SET UP: FILTER, to filter by role
  
-  // change to a return instead of variable?
   return `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -48,21 +65,12 @@ const pageGenerator = templateData => {
     </ul>
   </div>
   ${generateEngineeers(templateData)}
-  <div class="card">
-    <h2>INTERN name</h2>
-    <p>Role</p>
-    <ul>
-      <li>ID:</li>
-      <li>Email:</li>
-      <li>School:</li>
-    </ul>
-  </div>
+  ${generateInterns(templateData)}
   </main>
     
   </body>
   </html>
   `
-  console.log(template);
 }
 
 
