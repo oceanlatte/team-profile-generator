@@ -40,19 +40,14 @@ function startQuestions() {
     const teamManager = new Manager(name, id, email, office);
 
     teamArr.push(teamManager);
+
     // Send to choices for add team members
-    teamQuestions();
+    newTeamMember();
   })
 }
 
 // add team members OR finish building team
-function teamQuestions() {
-  console.log(`
-  ==================
-  Add a New Employee
-  ==================
-  `);
-
+function newTeamMember() {
   inquirer.prompt([
     {
       type: 'list',
@@ -61,38 +56,50 @@ function teamQuestions() {
       choices: ['Engineer', 'Intern', 'Finish building team']
     }
   ])
-  .then((answer) => {
-    // IF ANSWER == 'Finish building team' THEN VALIDATE? , ELSE do the sharedQuestions function
-    sharedQuestions(answer); // send to questions that engineer AND intern share
+  .then((roleAnswer) => {
+    // IF ANSWER == 'Finish building team' THEN VALIDATE?
+    if (roleAnswer.roleChoice == 'Finish building team') {
+      templateData(teamArr);
+      return;
+    }
+    // Otherwise do the sharedQuestions function
+    // send to questions that engineer AND intern share
+    sharedQuestions(roleAnswer); 
   })
 
   // after confirmation THEN send to templateData(teamArr)
 }
 
 
-function sharedQuestions(answer) {
+function sharedQuestions(roleAnswer) {
+  console.log(`
+  ===================
+  Add a New Employee
+  ===================
+  `);
+
   // shared questions between engineer and intern
   inquirer.prompt([
     {
       type: 'input',
       name: 'name',
-      message: `What is the ${answer.roleChoice}'s name?`,
+      message: `What is the ${roleAnswer.roleChoice}'s name?`,
     },
     {
       type: 'input',
       name: 'id',
-      message: `What is the ${answer.roleChoice}'s employee ID?`
+      message: `What is the ${roleAnswer.roleChoice}'s employee ID?`
     },
     {
       type: 'input',
       name: 'email',
-      message: `What is the ${answer.roleChoice}'s email?`
+      message: `What is the ${roleAnswer.roleChoice}'s email?`
     }
   ])
   // then ask role specific questions
-  .then ((engineerData) => {
+  .then ((newEmployeeData) => {
     // IF ENGINEER IS CHOSEN
-    if(answer.roleChoice == 'Engineer') {
+    if(roleAnswer.roleChoice == 'Engineer') {
       inquirer.prompt([
         {
           type: 'input',
@@ -100,16 +107,23 @@ function sharedQuestions(answer) {
           message: 'What is their GitHub username?'
         }
       ])
-      .then((githubData) => {
-        const newEngineer = new Engineer(engineerData.name, engineerData.id, engineerData.email, githubData.github);
+      .then((engineerGithub) => {
+        const { name, id, email } = newEmployeeData;
+        const newEngineer = new Engineer(name, id, email, engineerGithub.github);
+
+        // add new engineer data to Team Array
         teamArr.push(newEngineer);
-        console.log('new team array with engineer', teamArr);
+
+        // send back to ask if another team member should be added
+        newTeamMember();
       })
     }
     // IF INTERN IS CHOSEN
-    else {
-      console.log('Engineer NOOOOTTT chosen');
+    else if (roleAnswer == 'Intern') {
+      console.log('Intern was chosen');
+      return;
     }
+    
   })
 }
 

@@ -1,7 +1,9 @@
 const pageGenerator = templateData => {
-  const { name, id, email } = templateData;
-  console.log('destructured page data', templateData);
+  
+  console.log('template data', templateData);
 
+  // SET UP: FILTER, to filter by role
+ 
   // change to a return instead of variable?
   const template = `<!DOCTYPE html>
   <html lang="en">
@@ -12,13 +14,39 @@ const pageGenerator = templateData => {
     <title>Team Portfolio Generator</title>
   </head>
   <body>
-    <h1>Team Profile's</h1>
+  <header>
+  <h1>My Team</h1>
+</header>
+
+<main class="container">
+  <div class="card">
+    <h2>${templateData[0].name}</h2>
+    <p>Role: ${templateData[0].role}</p>
     <ul>
-      <li>${templateData.name}</li>
-      <li>${templateData.id}</li>
-      <li>${templateData.email}</li>
-      <li>${templateData.office}</li>
+      <li>ID: ${templateData[0].id}</li>
+      <li>Email: ${templateData[0].email}</li>
+      <li>Office number: ${templateData[0].office}</li>
     </ul>
+  </div>
+  <div class="card">
+    <h2>ENGINEER name</h2>
+    <p>Role</p>
+    <ul>
+      <li>ID:</li>
+      <li>Email:</li>
+      <li>GitHub:</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>INTERN name</h2>
+    <p>Role</p>
+    <ul>
+      <li>ID:</li>
+      <li>Email:</li>
+      <li>School:</li>
+    </ul>
+  </div>
+</main>
     
   </body>
   </html>
