@@ -1,8 +1,14 @@
-const Employee = require('./lib/Employee');
-// import other classes
 const inquirer = require('inquirer');
 const templateData = require('./src/template');
 const fs = require('fs');
+
+const Employee = require('./lib/Employee');
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+
+let teamArr = [];
+
 
 function startQuestions() {
   console.log('Welcome! As the team manager, please enter your information first:')
@@ -25,14 +31,28 @@ function startQuestions() {
     }
   ])
   .then(managerData => {
-    const newEmployee = new Employee(managerData.name, managerData.id, managerData.email);
+    const { name, id, email } = managerData;
+    const newEmployee = new Employee(name, id, email);
     console.log('inquierer manager data: ', managerData);
-    teamArr.push(managerData);
-    let teamArr = [];
-
     templateData(newEmployee);
+    portfolioQuestions();
   })
-  // add fs write file function
 }
 
-startQuestions();
+function portfolioQuestions() {
+  console.log(`
+  ==================
+  Add a New Employee
+  ==================
+  `);
+
+
+  
+}
+
+
+startQuestions()
+  // add fs write file function
+  // .then()
+  // .then(fs.writeFile('./dist/index.html', ))
+;
