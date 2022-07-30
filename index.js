@@ -40,11 +40,11 @@ function startQuestions() {
     const teamManager = new Manager(name, id, email, office);
 
     teamArr.push(teamManager);
-    portfolioQuestions();
+    teamQuestions();
   })
 }
 
-function portfolioQuestions() {
+function teamQuestions() {
   console.log(`
   ==================
   Add a New Employee
