@@ -1,8 +1,7 @@
 const inquirer = require('inquirer');
-const templateData = require('./src/template');
+const pageGenerator = require('./src/template');
 const fs = require('fs');
 
-const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
@@ -46,7 +45,7 @@ function startQuestions() {
   })
 }
 
-// add team members OR finish building team
+// ADD NEW team members OR finish building team
 function newTeamMember() {
   inquirer.prompt([
     {
@@ -59,15 +58,14 @@ function newTeamMember() {
   .then((roleAnswer) => {
     // IF ANSWER == 'Finish building team' THEN VALIDATE?
     if (roleAnswer.roleChoice == 'Finish building team') {
-      templateData(teamArr);
+      // after confirmation THEN send to templateData(teamArr)
+      console.log('Team Array right before generate page', teamArr);
+      writeToFile('./dist/index.html', pageGenerator(teamArr));
       return;
     }
-    // Otherwise do the sharedQuestions function
-    // send to questions that engineer AND intern share
+    // send the chosen role to the sharedQuestions function
     sharedQuestions(roleAnswer); 
   })
-
-  // after confirmation THEN send to templateData(teamArr)
 }
 
 
@@ -120,7 +118,6 @@ function sharedQuestions(roleAnswer) {
     }
     // IF INTERN IS CHOSEN
     else if (roleAnswer.roleChoice == 'Intern') {
-      console.log('Intern was chosen');
       inquirer.prompt([
         {
           type: 'input',
@@ -134,7 +131,6 @@ function sharedQuestions(roleAnswer) {
 
         // add new intern to team Array
         teamArr.push(newIntern);
-        console.log(teamArr);
 
         // send back to ask if another team member should be added
         newTeamMember();
@@ -143,9 +139,16 @@ function sharedQuestions(roleAnswer) {
   })
 }
 
+function writeToFile(fileName, data) {
+  fs.writeFile(fileName, data, err => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      console.log('Page generated successfully!');
+    }
+  })
+};
 
-startQuestions()
-  // add fs write file function
-  // .then()
-  // .then(fs.writeFile('./dist/index.html', ))
-;
+
+startQuestions();

@@ -1,3 +1,19 @@
+const generateEngineeers = templateData => {
+  console.log('generate Engineers temaplate data', templateData);
+  const EngineerArr = templateData.filter(({ role }) => 'Engineer');
+  console.log(EngineerArr);
+  
+  // <div class="card">
+  //   <h2>ENGINEER name</h2>
+  //   <p>Role</p>
+  //   <ul>
+  //     <li>ID:</li>
+  //     <li>Email:</li>
+  //     <li>GitHub:</li>
+  //   </ul>
+  // </div>
+}
+
 const pageGenerator = templateData => {
   
   console.log('template data', templateData);
@@ -5,7 +21,7 @@ const pageGenerator = templateData => {
   // SET UP: FILTER, to filter by role
  
   // change to a return instead of variable?
-  const template = `<!DOCTYPE html>
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -28,15 +44,7 @@ const pageGenerator = templateData => {
       <li>Office number: ${templateData[0].office}</li>
     </ul>
   </div>
-  <div class="card">
-    <h2>ENGINEER name</h2>
-    <p>Role</p>
-    <ul>
-      <li>ID:</li>
-      <li>Email:</li>
-      <li>GitHub:</li>
-    </ul>
-  </div>
+  ${generateEngineeers(templateData)}
   <div class="card">
     <h2>INTERN name</h2>
     <p>Role</p>
