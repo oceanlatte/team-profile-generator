@@ -18,7 +18,7 @@ This Node.js application is to be used by team managers in order to keep team me
 
 ## Usage
 Find the [Demonstration Video]() here!  
-![generated site preview](./assets/html-preview.png)
+![generated site preview](./assets/images/html-preview.png)
 
 This application is intended for other developers to use via IDE or terminal. Once installation is completed please type the following to get started:
 > node index.js
