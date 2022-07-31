@@ -67,9 +67,6 @@ const generateInterns = templateData => {
 }
 
 const pageGenerator = templateData => {
-  
-  console.log('template data', templateData);
- 
   return `<!DOCTYPE html>
   <html lang="en">
   <head>

@@ -5,13 +5,18 @@ const fs = require('fs');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const { start } = require('repl');
 
 let teamArr = [];
 
 // start with questions for Manager
 function startQuestions() {
-  console.log('Welcome! As the team manager, please enter your information first:')
+  console.log(`
+  ==============
+     Welcome! 
+  ==============
+
+  As the team manager, please enter your information first:
+  `)
    return inquirer.prompt([
     {
       type: 'input',
@@ -35,6 +40,7 @@ function startQuestions() {
     }
   ])
   .then(managerData => {
+    // send to validation function to check if info is correct so far
     managerValidate(managerData);
   })
 }
@@ -50,20 +56,18 @@ function newTeamMember() {
     }
   ])
   .then((roleAnswer) => {
-    // IF ANSWER == 'Finish building team' THEN VALIDATE?
-    if (roleAnswer.roleChoice == 'Finish building team') {
-      // after confirmation THEN send to templateData(teamArr)
-      console.log('Team Array right before generate page', teamArr);
-      writeToFile('./dist/index.html', pageGenerator(teamArr));
-      return;
+    if(roleAnswer.roleChoice === 'Finish building team'){
+      confirmFinish();
     }
-    // send the chosen role to the sharedQuestions function
-    sharedQuestions(roleAnswer); 
+    else {
+    // send the chosen role to the add new employee function
+      newEmployeeQuestions(roleAnswer);
+    }
   })
 }
 
 
-function sharedQuestions(roleAnswer) {
+function newEmployeeQuestions(roleAnswer) {
   console.log(`
   ===================
   Add a New ${roleAnswer.roleChoice}
@@ -133,6 +137,57 @@ function sharedQuestions(roleAnswer) {
   })
 }
 
+// validate manager information
+const managerValidate = managerData => {
+  console.table(managerData);
+  inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'managerConfirm',
+      message: 'Please confirm the above information is true:',
+      default: true,
+    }
+  ])
+  .then(confirmation => {
+    if (confirmation.managerConfirm === true) {
+      const { name, id, email, office } = managerData;
+      const teamManager = new Manager(name, id, email, office);
+
+      // add manager information to team array
+      teamArr.push(teamManager);
+
+      // send to generate new team members
+      newTeamMember(); 
+    } else if (!confirmation.managerConfirm) {
+      console.log('No problem, please try again.');
+      // send to startQuestions again
+      startQuestions();
+    }
+  })
+};
+
+const confirmFinish = () => {
+  // IF ANSWER == 'Finish building team' THEN VALIDATE?
+  inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'confirmFinishBuild',
+      message: 'Are you sure you would like to finish adding employees?',
+    }
+  ])
+  .then((finished) => {
+    if (finished.confirmFinishBuild) {
+    // after confirmation THEN send to templateData(teamArr)
+    writeToFile('./dist/index.html', pageGenerator(teamArr));
+    return;
+    }
+    else {
+      // else send back to pick employee type
+      newTeamMember(); 
+    }
+  })
+}
+
 function writeToFile(fileName, data) {
   fs.writeFile(fileName, data, err => {
     if (err) {
@@ -142,34 +197,6 @@ function writeToFile(fileName, data) {
       console.log('Page generated successfully!');
     }
   })
-};
-
-// validate manager information
-const managerValidate = managerData => {
-  console.table(managerData);
-  inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'managerConfirm',
-      message: 'Please confirm the above information is true:',
-      validate: confirm => {
-        if (confirm) {
-          const { name, id, email, office } = managerData;
-          const teamManager = new Manager(name, id, email, office);
-
-          // add manager information to team array
-          teamArr.push(teamManager);
-
-          // send to generate new team members
-          newTeamMember(); 
-        } else {
-          console.log('No problem, please try again.');
-          // send to startQuestions again
-          startQuestions();
-        }
-      }
-    },
-  ])
 };
 
 startQuestions();
