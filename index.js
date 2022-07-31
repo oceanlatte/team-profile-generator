@@ -57,6 +57,7 @@ function newTeamMember() {
   ])
   .then((roleAnswer) => {
     if(roleAnswer.roleChoice === 'Finish building team'){
+      // if finish chosen then send to confirmation function
       confirmFinish();
     }
     else {
@@ -167,7 +168,7 @@ const managerValidate = managerData => {
 };
 
 const confirmFinish = () => {
-  // IF ANSWER == 'Finish building team' THEN VALIDATE?
+  // IF ANSWER === 'Finish building team' then VALIDATE
   inquirer.prompt([
     {
       type: 'confirm',
@@ -177,7 +178,7 @@ const confirmFinish = () => {
   ])
   .then((finished) => {
     if (finished.confirmFinishBuild) {
-    // after confirmation THEN send to templateData(teamArr)
+    // after confirmation THEN send to pageGenerator(teamArr)
     writeToFile('./dist/index.html', pageGenerator(teamArr));
     return;
     }
