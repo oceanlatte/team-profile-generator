@@ -17,13 +17,9 @@ This Node.js application is to be used by team managers in order to keep team me
 > npm i
 
 ## Usage
-<<<<<<< HEAD
-Find the [Demonstration Video](https://drive.google.com/file/d/1epC2MvLgPoVaYGMUNm6Fv-nSFXwKbDx7/view) here!  
-=======
 Find the [Demonstration Video]() here!  
 ![generated site preview](./assets/images/html-preview.png)
 
->>>>>>> develop
 This application is intended for other developers to use via IDE or terminal. Once installation is completed please type the following to get started:
 > node index.js
 
