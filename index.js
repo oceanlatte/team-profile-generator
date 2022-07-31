@@ -5,9 +5,9 @@ const fs = require('fs');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const { start } = require('repl');
 
 let teamArr = [];
-
 
 // start with questions for Manager
 function startQuestions() {
@@ -21,7 +21,7 @@ function startQuestions() {
     {
       type: 'input',
       name: 'id',
-      message: 'What is your employee ID?' // ADD CONFIRMATION FOR NUMBER ONLY INPUT
+      message: 'What is your employee ID?' 
     },
     {
       type: 'input',
@@ -31,17 +31,11 @@ function startQuestions() {
     {
       type: 'input',
       name: 'office',
-      message: 'What is your office number?' // ADD CONFIRMATION FOR NUMBER ONLY INPUT
+      message: 'What is your office number?'
     }
   ])
   .then(managerData => {
-    const { name, id, email, office } = managerData;
-    const teamManager = new Manager(name, id, email, office);
-
-    teamArr.push(teamManager);
-
-    // Send to choices for add team members
-    newTeamMember();
+    managerValidate(managerData);
   })
 }
 
@@ -52,7 +46,7 @@ function newTeamMember() {
       type: 'list',
       name: 'roleChoice',
       message: 'Which employee type would you like to add?',
-      choices: ['Engineer', 'Intern', 'Finish building team']
+      choices: ['Engineer', 'Intern', new inquirer.Separator(), 'Finish building team']
     }
   ])
   .then((roleAnswer) => {
@@ -148,6 +142,34 @@ function writeToFile(fileName, data) {
       console.log('Page generated successfully!');
     }
   })
+};
+
+// validate manager information
+const managerValidate = managerData => {
+  console.table(managerData);
+  inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'managerConfirm',
+      message: 'Please confirm the above information is true:',
+      validate: confirm => {
+        if (confirm) {
+          const { name, id, email, office } = managerData;
+          const teamManager = new Manager(name, id, email, office);
+
+          // add manager information to team array
+          teamArr.push(teamManager);
+
+          // send to generate new team members
+          newTeamMember(); 
+        } else {
+          console.log('No problem, please try again.');
+          // send to startQuestions again
+          startQuestions();
+        }
+      }
+    },
+  ])
 };
 
 startQuestions();
