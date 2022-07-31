@@ -4,7 +4,7 @@ const generateEngineeers = templateData => {
 
   const mappedEngineers = engineerArr.map(({ name, id, email, role, github }) => {
     return ` 
-  <div class="card col-3 mx-3 my-5">
+  <div class="card col-lg-3 col-sm-5 mx-3 my-4">
     <div class="card-header bg-secondary bg-gradient text-white">
       <h2 class="card-title">${name}</h2>
       <p class="mb-0">${role}</p>
@@ -40,7 +40,7 @@ const generateInterns = templateData => {
 
   const mappedInterns = internArr.map(({ name, id, email, role, school }) => {
     return `
-  <div class="card col-3 mx-3 my-5">
+  <div class="card col-lg-3 col-sm-5 mx-3 my-4">
     <div class="card-header bg-light bg-gradient">
       <h2 class="card-title">${name}</h2>
       <p class="mb-0">${role}</p>
@@ -81,8 +81,8 @@ const pageGenerator = templateData => {
     <h1 class="bg-info bg-gradient text-center py-4">My Team</h1>
   </header>
 
-<main class="container d-flex flex-wrap">
-  <div class="card col-3 mx-3 my-5">
+<main class="container d-flex flex-wrap justify-content-center">
+  <div class="card col-lg-3 col-sm-5 mx-3 my-4">
     <div class="card-header bg-dark text-white bg-gradient">
       <h2 class="card-title">${templateData[0].name}</h2>
       <p class="mb-0">${templateData[0].role}</p>
